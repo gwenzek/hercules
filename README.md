@@ -86,23 +86,41 @@ by testing, fixing bugs, adding [new analyses](https://github.com/src-d/hercules
 
 ## Installation
 
-Grab `hercules` binary from the [Releases page](https://github.com/src-d/hercules/releases).
-`labours` is installable from [PyPi](https://pypi.org/):
-
-```
-pip3 install labours
-```
-
-[`pip3`](https://pip.pypa.io/en/stable/installing/) is the Python package manager.
-
-Numpy and Scipy can be installed on Windows using http://www.lfd.uci.edu/~gohlke/pythonlibs/
+Direct **labours** installation from Pypi doesn't work anymore in Python 3.12.
+You need to use the following instructions:
 
 ### Build from source
 You are going to need Go (>= v1.11) and [`protoc`](https://github.com/google/protobuf/releases).
 ```
 git clone https://github.com/src-d/hercules && cd hercules
 make
-pip3 install -e ./python
+```
+
+This should produce the `hercules` binary directly in the top-level folder.
+To install the python scripts producing the graph you need to do the following:
+
+```
+# create a dedicated python virtual environment
+python3 -m venv venv
+. ./venv/bin/activate
+
+pip install -e ./python
+```
+
+Then `labours` become available from the CLI.
+If you come back later don't forget to `. ./venv/bin/activate` before being able to run `labours`.
+Note that by default not all analysis are available, because some have big dependencies.
+
+To make available `labours -m couples-*` and `labours -m overwrites_matrix` run:
+
+```
+pip install -e './python[couples]'
+```
+
+To make available `labours -m devs` you can run:
+
+```
+pip install -e './python[devs]'
 ```
 
 ### GitHub Action
